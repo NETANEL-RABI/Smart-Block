@@ -1,28 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="24dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="הוספת חוק חסימה (22:00-24:00 כברירת מחדל)"
-        android:textSize="16sp"
+        android:text="הוספת חוק חסימה"
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:layout_marginBottom="16dp" />
 
-    <EditText
-        android:id="@+id/etTargetPackage"
+    <Button
+        android:id="@+id/btnPickApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="שם חבילה (למשל com.google.android.youtube)" />
+        android:text="בחר אפליקציה" />
+
+    <TextView
+        android:id="@+id/tvSelectedApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="לא נבחרה אפליקציה"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ימים (השאר לא מסומן = כל השבוע)"
+        android:layout_marginBottom="4dp" />
+
+    <CheckBox android:id="@+id/cbSunday" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ראשון" />
+    <CheckBox android:id="@+id/cbMonday" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="שני" />
+    <CheckBox android:id="@+id/cbTuesday" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="שלישי" />
+    <CheckBox android:id="@+id/cbWednesday" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="רביעי" />
+    <CheckBox android:id="@+id/cbThursday" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="חמישי" />
+    <CheckBox android:id="@+id/cbFriday" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="שישי" />
+    <CheckBox android:id="@+id/cbSaturday" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="שבת" />
+
+    <Button
+        android:id="@+id/btnStartTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="התחלה: 22:00"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnEndTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="סיום: 07:00"
+        android:layout_marginTop="8dp" />
 
     <Button
         android:id="@+id/btnAddRule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="הוסף חוק"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="24dp" />
 
 </LinearLayout>
+</ScrollView>
