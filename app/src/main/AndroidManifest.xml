@@ -21,7 +21,7 @@
         android:theme="@style/Theme.FilterApp">
 
         <activity
-            android:name=".ui.DashboardActivity"
+            android:name=".ui.PinLockActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,6 +29,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.DashboardActivity" android:exported="false" />
         <activity android:name=".ui.ScheduleActivity" android:exported="false" />
         <activity android:name=".ui.AppPickerActivity" android:exported="false" />
 
