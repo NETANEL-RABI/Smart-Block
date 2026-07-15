@@ -1,24 +1,32 @@
 package com.yourapp.filter.ui
 
 import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
 import android.net.VpnService
 import android.os.Bundle
 import android.provider.Settings
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.yourapp.filter.admin.FilterDeviceAdminReceiver
 import android.app.admin.DevicePolicyManager
 import com.yourapp.filter.R
+import com.yourapp.filter.admin.FilterDeviceAdminReceiver
 import com.yourapp.filter.vpn.FilterVpnService
 
 class DashboardActivity : AppCompatActivity() {
 
+    private var pendingAction: (() -> Unit)? = null
+
     private val vpnPermissionLauncher =
-        registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()) { result ->
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) startVpnService()
+        }
+
+    private val pinVerifyLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
-                startVpnService()
+                pendingAction?.invoke()
             }
+            pendingAction = null
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,8 +36,9 @@ class DashboardActivity : AppCompatActivity() {
         findViewById<android.widget.Button>(R.id.btnStartFilter).setOnClickListener {
             requestVpnPermission()
         }
+        // עצירת הסינון דורשת PIN - אחרת כל אחד יכול לכבות את ההגנה
         findViewById<android.widget.Button>(R.id.btnStopFilter).setOnClickListener {
-            stopVpnService()
+            requirePinThen { stopVpnService() }
         }
         findViewById<android.widget.Button>(R.id.btnEnableAccessibility).setOnClickListener {
             startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
@@ -37,9 +46,18 @@ class DashboardActivity : AppCompatActivity() {
         findViewById<android.widget.Button>(R.id.btnEnableDeviceAdmin).setOnClickListener {
             requestDeviceAdmin()
         }
+        // כניסה ללוח הזמנים (עריכת/מחיקת חוקים) דורשת PIN
         findViewById<android.widget.Button>(R.id.btnSchedule).setOnClickListener {
-            startActivity(Intent(this, ScheduleActivity::class.java))
+            requirePinThen { startActivity(Intent(this, ScheduleActivity::class.java)) }
         }
+    }
+
+    private fun requirePinThen(action: () -> Unit) {
+        pendingAction = action
+        val intent = Intent(this, PinLockActivity::class.java).apply {
+            putExtra(PinLockActivity.EXTRA_VERIFY_ONLY, true)
+        }
+        pinVerifyLauncher.launch(intent)
     }
 
     private fun requestVpnPermission() {
@@ -52,8 +70,7 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun startVpnService() {
-        val intent = Intent(this, FilterVpnService::class.java)
-        startForegroundService(intent)
+        startForegroundService(Intent(this, FilterVpnService::class.java))
     }
 
     private fun stopVpnService() {
