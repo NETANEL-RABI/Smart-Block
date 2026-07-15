@@ -30,6 +30,7 @@
         </activity>
 
         <activity android:name=".ui.ScheduleActivity" android:exported="false" />
+        <activity android:name=".ui.AppPickerActivity" android:exported="false" />
 
         <activity
             android:name=".ui.BlockOverlayActivity"
