@@ -16,6 +16,23 @@
         android:gravity="center"
         android:layout_marginBottom="24dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="בקש גישה זמנית:"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp" />
+
+    <Button android:id="@+id/btn5Min" android:layout_width="200dp"
+        android:layout_height="wrap_content" android:text="5 דקות" android:layout_marginBottom="8dp" />
+
+    <Button android:id="@+id/btn10Min" android:layout_width="200dp"
+        android:layout_height="wrap_content" android:text="10 דקות" android:layout_marginBottom="8dp" />
+
+    <Button android:id="@+id/btn15Min" android:layout_width="200dp"
+        android:layout_height="wrap_content" android:text="15 דקות" android:layout_marginBottom="24dp" />
+
     <Button android:id="@+id/btnClose" android:layout_width="wrap_content"
         android:layout_height="wrap_content" android:text="סגור" />
 
